@@ -8,14 +8,17 @@ using System.Threading.Tasks;
 
 namespace ConsoleApp1
 {
-    public class Program
+    public class Program : MyInterface
     {
         static void Main(string[] args)
         {
-            CreateFileWithUniqueInts();
+            // Define program object instance
+            Program program = new Program();
+            // Define program object instance
+            program.CreateFileWithUniqueInts();
         }
-
-        public static void CreateFileWithUniqueInts()
+        
+        public void CreateFileWithUniqueInts()
         {
             // Generate a list of 100 int values that are converted to string
             List<string> randomNumbers = ConvertIntListToStringList(GenerateUniqueIntList());
@@ -24,7 +27,7 @@ namespace ConsoleApp1
         }
 
         // Generate List<int> with 100 unique ints
-        public static List<int> GenerateUniqueIntList()
+        public List<int> GenerateUniqueIntList()
         {
             // Create a list with integers
             List<int> randomNumbers = new List<int>();
@@ -47,19 +50,18 @@ namespace ConsoleApp1
             return randomNumbers;
         }
 
-        // Convert a List<int> to a List<string>
-        public static List<string> ConvertIntListToStringList(List<int>randomNumbers)
+        public List<string> ConvertIntListToStringList(List<int> randomNumbers)
         {
             // Foreach value that exists in the List<int>randomNumbers convert into string so we get a List<string> back
             return randomNumbers.ConvertAll<string>(delegate (int i) { return i.ToString(); });
         }
 
         // Write a List<string> to a new file called 'output.txt' where the .exe file is located ("ConsoleApp1\bin\Debug")
-        public static void WriteToFile(List<string>randomNumbers)
+        public void WriteToFile(List<string> randomNumbers)
         {
             // Foreach result in the List<string>randomNumers seperate it with a ',' and add it to a string.
             string result = String.Join(", ", randomNumbers);
-            
+
             // Get the currect root the the project
             string root = Directory.GetCurrentDirectory();
             // Write the reulst to a textfile called 'output.txt' where the .exe file is located ("ConsoleApp1\bin\Debug")
@@ -67,7 +69,7 @@ namespace ConsoleApp1
 
             // debugg write result also in console
             Console.WriteLine(result);
-            Console.WriteLine();
+            Console.WriteLine(File.Exists(root + "/output.txt"));
             // Keep the console open
             Console.ReadLine();
         }
